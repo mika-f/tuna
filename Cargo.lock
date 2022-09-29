@@ -1356,7 +1356,10 @@ version = "0.1.0"
 dependencies = [
  "anyhow",
  "clap",
+ "http",
  "jsonrpsee",
+ "serde",
+ "serde_json",
  "syntect",
  "tokio",
 ]
