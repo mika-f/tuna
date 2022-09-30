@@ -11,13 +11,10 @@ pub async fn exec(
     globals: crate::commands::globals::GlobalArgs,
     _args: Args,
 ) -> anyhow::Result<()> {
-    let response =
-        eth::request::<String>(globals.endpoint(), "net_version", rpc_params![]).await;
+    let response = eth::request::<String>(globals.endpoint(), "net_version", rpc_params![]).await?;
 
-    match response {
-        Ok(response) => response.print_json(globals.no_colors())?,
-        Err(err) => return Err(err),
-    };
-
-    Ok(())
+    match response.print_json::<String>(globals.no_colors(), globals.no_deserialize(), None) {
+        Ok(()) => Ok(()),
+        Err(err) => Err(err),
+    }
 }

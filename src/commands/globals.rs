@@ -61,7 +61,11 @@ impl GlobalArgs {
         return self.endpoint.as_ref();
     }
 
-    pub fn no_colors(self) -> bool {
+    pub fn no_colors(&self) -> bool {
         return self.no_colors;
+    }
+
+    pub fn no_deserialize(&self) -> bool {
+        return self.no_deserialize;
     }
 }

@@ -26,6 +26,7 @@ async fn main() -> anyhow::Result<()> {
         commands::globals::GlobalArgs::new(args.endpoint, args.no_colors, args.no_serialize);
 
     let result = match args.subcommand {
+        commands::SubCommandArgs::Eth(args) => commands::eth::exec(globals, args).await,
         commands::SubCommandArgs::Net(args) => commands::net::exec(globals, args).await,
         commands::SubCommandArgs::Web3(args) => commands::web3::exec(globals, args).await,
     };

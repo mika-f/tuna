@@ -20,8 +20,21 @@ impl<T: Serialize> JsonEntity<T> {
         Ok(serde_json::to_string_pretty(&self)?)
     }
 
-    pub fn print_json(self, no_colors: bool) -> anyhow::Result<()> {
-        let json = self.to_json()?;
+    pub fn print_json<R: Serialize>(
+        self,
+        no_colors: bool,
+        no_deserialize: bool,
+        deserializer: Option<Box<dyn Fn(T) -> JsonEntity<R>>>,
+    ) -> anyhow::Result<()> {
+        let json = if no_deserialize {
+            self.to_json()?
+        } else {
+            if deserializer.is_none() {
+                self.to_json()?
+            } else {
+                deserializer.unwrap()(self.result).to_json()?
+            }
+        };
 
         if no_colors {
             println!("{}", json);
