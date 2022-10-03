@@ -1,6 +1,7 @@
 use clap::Parser;
 
 mod accounts;
+mod block_number;
 mod chain_id;
 mod protocol_version;
 
@@ -8,6 +9,9 @@ mod protocol_version;
 pub enum EthSubCommand {
     #[clap()]
     Accounts(accounts::Args),
+
+    #[clap()]
+    BlockNumber(block_number::Args),
 
     #[clap()]
     ChainId(chain_id::Args),
@@ -22,6 +26,7 @@ pub async fn exec(
 ) -> anyhow::Result<()> {
     match args {
         EthSubCommand::Accounts(args) => accounts::exec(globals, args).await,
+        EthSubCommand::BlockNumber(args) => block_number::exec(globals, args).await,
         EthSubCommand::ChainId(args) => chain_id::exec(globals, args).await,
         EthSubCommand::ProtocolVersion(args) => protocol_version::exec(globals, args).await,
     }
