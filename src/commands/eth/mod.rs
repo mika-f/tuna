@@ -3,6 +3,7 @@ use clap::Parser;
 mod accounts;
 mod block_number;
 mod chain_id;
+mod gas_price;
 mod protocol_version;
 
 #[derive(Parser)]
@@ -17,6 +18,9 @@ pub enum EthSubCommand {
     ChainId(chain_id::Args),
 
     #[clap()]
+    GasPrice(gas_price::Args),
+
+    #[clap()]
     ProtocolVersion(protocol_version::Args),
 }
 
@@ -28,6 +32,7 @@ pub async fn exec(
         EthSubCommand::Accounts(args) => accounts::exec(globals, args).await,
         EthSubCommand::BlockNumber(args) => block_number::exec(globals, args).await,
         EthSubCommand::ChainId(args) => chain_id::exec(globals, args).await,
+        EthSubCommand::GasPrice(args) => gas_price::exec(globals, args).await,
         EthSubCommand::ProtocolVersion(args) => protocol_version::exec(globals, args).await,
     }
 }
