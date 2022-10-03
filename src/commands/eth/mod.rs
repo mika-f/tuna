@@ -5,6 +5,7 @@ mod block_number;
 mod chain_id;
 mod gas_price;
 mod hashrate;
+mod mining;
 mod protocol_version;
 
 #[derive(Parser)]
@@ -25,6 +26,9 @@ pub enum EthSubCommand {
     Hashrate(hashrate::Args),
 
     #[clap()]
+    Mining(mining::Args),
+
+    #[clap()]
     ProtocolVersion(protocol_version::Args),
 }
 
@@ -38,6 +42,7 @@ pub async fn exec(
         EthSubCommand::ChainId(args) => chain_id::exec(globals, args).await,
         EthSubCommand::GasPrice(args) => gas_price::exec(globals, args).await,
         EthSubCommand::Hashrate(args) => hashrate::exec(globals, args).await,
+        EthSubCommand::Mining(args) => mining::exec(globals, args).await,
         EthSubCommand::ProtocolVersion(args) => protocol_version::exec(globals, args).await,
     }
 }
