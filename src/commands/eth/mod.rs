@@ -4,6 +4,7 @@ mod accounts;
 mod block_number;
 mod chain_id;
 mod gas_price;
+mod hashrate;
 mod protocol_version;
 
 #[derive(Parser)]
@@ -21,6 +22,9 @@ pub enum EthSubCommand {
     GasPrice(gas_price::Args),
 
     #[clap()]
+    Hashrate(hashrate::Args),
+
+    #[clap()]
     ProtocolVersion(protocol_version::Args),
 }
 
@@ -33,6 +37,7 @@ pub async fn exec(
         EthSubCommand::BlockNumber(args) => block_number::exec(globals, args).await,
         EthSubCommand::ChainId(args) => chain_id::exec(globals, args).await,
         EthSubCommand::GasPrice(args) => gas_price::exec(globals, args).await,
+        EthSubCommand::Hashrate(args) => hashrate::exec(globals, args).await,
         EthSubCommand::ProtocolVersion(args) => protocol_version::exec(globals, args).await,
     }
 }
